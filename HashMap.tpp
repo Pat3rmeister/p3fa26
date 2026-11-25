@@ -6,18 +6,32 @@
 // Every function below is a stub that compiles but does nothing useful.
 // Replace each TODO with your implementation.
 
-template <class V>
-HashMap<V>::HashMap() : HashMap(DEFAULT_BUCKETS) {}
+#include "HashMap.h"
 
 template <class V>
-HashMap<V>::HashMap(std::size_t initialBuckets) {
-    // TODO
-    (void)initialBuckets;
+HashMap<V>::HashMap() : HashMap(DEFAULT_BUCKETS) {
+
 }
 
+//second constructor
+//set every node to null bc when map is first created, it has no nodes, so therefore everything is null
+template <class V>
+HashMap<V>::HashMap(std::size_t initialBuckets) {
+    buckets_.resize(initialBuckets, nullptr);
+    size_ = 0;
+}
+// *POINTERS deconstructor, just delete any dynamically allocated memory in the map
 template <class V>
 HashMap<V>::~HashMap() {
-    // TODO
+    for (std::size_t i = 0; i < buckets_.size(); i++) {
+        Node* current = buckets_[i];
+
+        while (current != nullptr) { //while there is a node
+            Node* next = current->next; //save the next node
+            delete current; //delete the current node
+            current = next; //go to the next node that got saved
+        }
+    }
 }
 
 template <class V>
