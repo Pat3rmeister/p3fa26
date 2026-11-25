@@ -1,7 +1,7 @@
 // HashMap.tpp -- implementation of HashMap<V>. Included at the end of HashMap.h.
 //
-// Name:
-// SDSU ID:
+// Name: Patrick Quan
+// SDSU ID: 133858566
 //
 // Every function below is a stub that compiles but does nothing useful.
 // Replace each TODO with your implementation.
