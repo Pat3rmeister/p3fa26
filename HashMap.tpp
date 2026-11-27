@@ -37,8 +37,23 @@ HashMap<V>::~HashMap() {
 template <class V>
 bool HashMap<V>::put(const std::string& key, const V& value) {
     // TODO
-    (void)key; (void)value;
-    return false;
+    // need to handle two situations: Key exists, then replace value and if the key and value dont exist, then create new node and insert
+
+    std::size_t index = hashString(key) % buckets_.size(); //want to find the correct bucket
+    Node* current = buckets_[index];
+    while (current != nullptr) {
+        if (current->key == key) {
+            current->value = value;
+            return false;
+        }
+        current = current->next;
+    }
+
+    Node* newNode = new Node{key, value, buckets_[index]};
+    buckets_[index] = newNode;
+    size_++;
+
+    return true;
 }
 
 template <class V>
