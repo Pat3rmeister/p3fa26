@@ -56,10 +56,17 @@ bool HashMap<V>::put(const std::string& key, const V& value) {
     return true;
 }
 
+//get function similar to put function in terms of accessing the bucket, except just return the value
 template <class V>
 std::optional<V> HashMap<V>::get(const std::string& key) const {
-    // TODO
-    (void)key;
+    std::size_t index = hashString(key) % buckets_.size(); //want to find the correct bucket
+    Node* current = buckets_[index];
+    while (current != nullptr) {
+        if (current->key == key) {
+            return current->value;
+        }
+        current = current->next;
+    }
     return std::nullopt;
 }
 
