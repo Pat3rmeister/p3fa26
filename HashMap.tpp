@@ -72,15 +72,36 @@ std::optional<V> HashMap<V>::get(const std::string& key) const {
 
 template <class V>
 bool HashMap<V>::contains(const std::string& key) const {
-    // TODO
-    (void)key;
+    std::size_t index = hashString(key) % buckets_.size(); //similar to the above functions with the accessing a bucket index
+    Node* current = buckets_[index];
+    while (current != nullptr) {
+        if (current->key == key) {
+            return true;
+        }
+        current = current->next;
+    }
     return false;
 }
 
 template <class V>
 bool HashMap<V>::remove(const std::string& key) {
-    // TODO
-    (void)key;
+    std::size_t index = hashString(key) % buckets_.size();
+    Node* current = buckets_[index];
+    Node* previous = nullptr; //need to keep track of previous to preserve singly linked list
+    while (current != nullptr) {
+        if (current->key == key) {
+            if (previous == nullptr) { //if there is no other nodes in the list
+                buckets_[index] = current->next;
+            } else {
+                previous->next = current->next;
+            }
+            delete current;
+            size_--;
+            return true;
+        }
+        previous = current;
+        current = current->next;
+    }
     return false;
 }
 
